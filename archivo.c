@@ -8,5 +8,6 @@
 int main (int argn, char *args[]){
 
 	printf("hola");
+	printf("linea nueva");
 	exit(0);
 }
