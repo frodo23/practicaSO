@@ -42,11 +42,14 @@ void *calcularTransferencias(){
 	for(;;)
 	{
 		monto = getAleatorio( arr_cuentas[cuentaA] ); //Se consulta un numero aleatorio entre 0 y el valor de la cuentaA
+		arr_cuentas[cuentaA] = arr_cuentas[cuentaA] - monto; //Se retira en la cuentaA el monto aleatorio
 		arr_cuentas[cuentaB] = arr_cuentas[cuentaB] + monto; //Se consigna en la cuentaB el monto retirado aleatorio de la cuentaA
+
 		monto = getAleatorio( arr_cuentas[cuentaB] ); //Se consulta un numero aleatorio entre 0 y el valor de la cuentaB
+		arr_cuentas[cuentaB] = arr_cuentas[cuentaB] - monto; //Se retira en la cuentaA el monto aleatorio
 		arr_cuentas[cuentaA] = arr_cuentas[cuentaA] + monto; //Se consigna en la cuentaA el monto retirado aleatorio de la cuentaB
 		
-		if(time(NULL) > start + cantidad_tiempo_a_correr*1000){ //Si ya ejecuto durante cantidad_tiempo_a_correr debe parar de hacer transferencias
+		if(time(NULL) > start + cantidad_tiempo_a_correr){ //Si ya ejecuto durante cantidad_tiempo_a_correr debe parar de hacer transferencias
 			break;
 		}
 	}
@@ -56,12 +59,14 @@ void *calcularTransferencias(){
 	arr_cuentas_estado[cuentaB] = 0; //Se pone el estado de la cuenta como desocupado
 	pthread_mutex_unlock(&sum_mutex);  //Sale de zona segura
 
-	return(0);
+	int resu=0;
+	return (void*)resu;
+
 }
 
 int getAleatorio(int maximo){
 	srand(time(NULL));
-    int result = rand() % maximo;
+    	int result = rand() % maximo;
 	return result;
 }
 
@@ -89,10 +94,16 @@ int main (int argn, char *arg[]){
 		arr_cuentas_estado[x] = 0;	
 	}
 	
-	pthread_t hilos[numeroDeHilos]; //Se crea la cantidad de hilos que indica la variable numeroDeHilos
+	pthread_t hilos[numeroDeHilos]; //Se crean la cantidad de hilos que indica la variable numeroDeHilos
 	for ( x = 0; x < numeroDeHilos; x++ ){
 		pthread_create (&hilos[x], NULL, &calcularTransferencias, NULL);
+	}
+	
+	int nada;
+	for ( x = 0; x < numeroDeHilos; x++ ){
+		pthread_join(hilos[x],(void*)&nada);
 	}	
+	
 	
 	int balanceTotal=0;
 	for ( x = 0; x < numero_cuentas; x++ ){
@@ -100,6 +111,8 @@ int main (int argn, char *arg[]){
 		balanceTotal = balanceTotal + arr_cuentas[x];
 	}
 	printf("\nBalance Total%d: \n", balanceTotal);
-		
+
+	pthread_mutex_destroy(&sum_mutex); 
+	pthread_exit(NULL); 
 	exit(0);
 }
