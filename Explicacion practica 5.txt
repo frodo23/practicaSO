@@ -1,0 +1,27 @@
+DESCRIPCION PRACTICA 5
+
+La idea es utilizar un arreglo de cuentas, y en cada posición estará el monto de esa cuenta,
+también utilizar otro arreglo de estado de cuentas del mismo tamaño que el arreglo de cuentas, 
+en cada posición habrá un 1 o un 0 indicando el estado de la cuenta
+si hay un 0 quiere decir que ningun hilo está haciendo transferencias en la cuenta de esa posicion
+si hay un 1 quiere decir que hay un hilo haciendo transferencias en esa cuenta
+En el acceso y modificación del arreglo de estado de cuentas es donde se puede presentar condiciones de carrera, 
+puesto que varios hilos pueden leer el estado al mismo tiempo y si ambos leen un cero (disponible) sobre la misma cuenta, ambos hilos realizarán transferencias 
+en la cuenta simultaneamente.
+
+Para la comunicacion entre el programa de transferencias y el programa de prueba se utilizara memoria compartida.
+
+El programa de prueba manda un parametro extra, un consecutivo de las ejecuciones, 
+el programa que realiza las transferencias almacena en esa posicion de la memoria compartida el resultado del balance de la ejecucion.
+El programa de prueba también almacena en esa misma posicion, pero en otro arreglo, el resultado que debe dar el balance.
+Asi, al terminar las ejecuciones, el programa de prueba compara los resultados de la memoria compartida (resultados de los balances al final de las transferencias),
+con el arreglo de los balances calculados, para determinar si el programa fallo, o no.
+
+
+Un problema encontrado fue con la función rand, resultó ser una función no-reentrante por lo que fue necesario implementar un mutex.
+Se detectó porque al final, siempre se modificaban los valores de las mismas dos cuentas.
+Se solucionó buscando el porqué en internet, busqueda que arrojó la sugerencia de un mutex.
+
+En lo planeado como solución inicial y el resultado final no existe gran diferencia. A pesar de las complicaciones con algunos detalles, la idea permanecio
+como lo pensado. 
+
