@@ -25,3 +25,14 @@ Se solucionó buscando el porqué en internet, busqueda que arrojó la sugerenci
 En lo planeado como solución inicial y el resultado final no existe gran diferencia. A pesar de las complicaciones con algunos detalles, la idea permanecio
 como lo pensado. 
 
+Archivos
+A continuación se da una breve descripción de los archivos contenidos en este proyecto:
+programa.c //Contiene el codigo en lenguaje c del programa que realiza las transferencias de acuero a los parámetros enviados
+programa //Resultado de compilar el archivo programa.c
+pprueba.c //Contiene el codigo en lenguaje c del programa que realiza las pruebas de transferencias leyendo el archivo de pruebas.
+pprueba //Resultado de compilar el archivo pprueba.c
+vectorpruebas // archivo de texto que contiene los parametros con los que se realizaran pruebas
+ejecucion programa.png //Pantallazo tomado al ejecutar el programa de transferencias
+ejecucion pprueba.png //Pantallazo tomado al ejecutar el programa de prueba con el archivo vectorpruebas
+Explicacion practica 5.txt //Contiene una breve descripcion de lo que se realizó en la práctica, las ideas y los problemas encontrados.
+archivo.c //Archivo que sirvio para ir haciendo commits del código que se iba realizando. NO ES PARTE DEL RESULTADO FINAL
